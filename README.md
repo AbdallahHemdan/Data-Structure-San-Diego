@@ -17,7 +17,7 @@ This Specialization is unique, because it offers two real-world projects. Advanc
 - Basic Data Structures
   * Arrays and Linked Lists
   * Stacks and Queues
-		* Trees
+  * Trees
 		
 - Dynamic Arrays and Amortized Analysis
 - Priority Queues and Disjoint Sets
