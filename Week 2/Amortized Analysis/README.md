@@ -105,3 +105,78 @@ The three units charged to m are spent as follows:
 and is used to move that element the first time the table is grown after m is inserted. 
 ### Physicist's Method
 
+```
+Above we saw the aggregate method and the banker's method for dealing with extensible arrays.
+Now let us look at the physicist's method.
+```
+
+```
+Suppose we can define a potential function Φ (read "Phi") on states of a data structure with the following properties:
+```
+- Φ(h0) = 0, where h0 is the initial state of the data structure.
+- Φ(ht) ≥ 0 for all states ht of the data structure occurring during the course of the computation.
+
+```
+Intuitively, the potential function will keep track of the precharged time at any point in the computation.
+It measures how much saved-up time is available to pay for expensive operations.
+It is analogous to the bank balance in the banker's method. But interestingly, it depends only
+on the current state of the data structure, irrespective of the history of the computation that got it into that state.
+```
+
+```
+We then define the amortized time of an operation as
+```
+__c + Φ(h') − Φ(h)__
+
+```
+where c is the actual cost of the operation and h and h' are the states of the data
+structure before and after the operation, respectively.
+```
+```
+Thus the amortized time is the actual time plus the change in potential. Ideally, Φ should be defined
+so that the amortized time of each operation is small.
+Thus the change in potential should be positive for low-cost operations and negative for high-cost operations.
+```
+
+```
+Now consider a sequence of n operations taking actual times c0, c1, c2, ..., cn−1 and
+producing data structures h1, h2, ..., hn starting from h0. The total amortized time is the sum of the individual amortized times:
+
+(c0 + Φ(h1) − Φ(h0)) + (c1 + Φ(h2) − Φ(h1)) + ... + (cn−1 + Φ(hn) − Φ(hn−1))
+= c0 + c1 + ... + cn−1 + Φ(hn) − Φ(h0)
+= c0 + c1 + ... + cn−1 + Φ(hn).
+```
+
+```
+Therefore the amortized time for a sequence of operations overestimates of the actual time by Φ(hn),
+which by assumption is always positive. Thus the total amortized time is always an upper bound on the actual time.
+
+For dynamically resizable arrays with resizing by doubling, we can use the potential function
+
+Φ(h) = 2n − m,
+```
+
+```
+where n is the current number of elements and m is the current length of the array.
+If we start with an array of length 0 and allocate an array of length 1 when the first element is added,
+and thereafter double the array size whenever we need more space, we have Φ(h0) = 0 and Φ(ht) ≥ 0 for all t.
+```
+```
+The latter inequality holds because the number of elements is always at least half the size of the array.
+
+Now we would like to show that adding an element takes amortized constant time. There are two cases.
+```
+```
+If n < m, then the actual cost is 1, n increases by 1, and m does not change.
+Then the potential increases by 2, so the amortized time is 1 + 2 = 3.
+If n = m, then the array is doubled, so the actual time is n + 1.
+But the potential drops from n to 2, so amortized time is n + 1 + (2 − n) = 3.
+In both cases, the amortized time is O(1).
+```
+```
+The key to amortized analysis with the physicist's method is to define the right potential function.
+The potential function needs to save up enough time to be used later when it is needed.
+But it cannot save so much time that it causes the amortized time of the current operation to be too high.
+```
+__Helpful Lecture__
+https://www.cs.cornell.edu/courses/cs3110/2013sp/lectures/lec21-amortized/lec21.html
