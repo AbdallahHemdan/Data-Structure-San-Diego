@@ -180,3 +180,13 @@ But it cannot save so much time that it causes the amortized time of the current
 ```
 __Helpful Lecture__
 https://www.cs.cornell.edu/courses/cs3110/2013sp/lectures/lec21-amortized/lec21.html
+
+__Summary__
+Three ways to do analysis:
+- Aggregate method (brute-force sum)
+- Banker’s method (tokens)
+- Physicist’s method (potential function, Φ)
+
+__NOTE__
+Nothing changes in the code: runtime
+We only make analysis only
